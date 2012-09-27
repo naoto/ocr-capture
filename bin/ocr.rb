@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
-
-$: << './bin/'
+#-*- coding: utf-8 -*-
 
 require 'sinatra'
 require 'sinatra/contrib'
 require 'erb'
 require 'RMagick'
 require 'tesseract'
+require "sinatra/reloader" if development?
 
 set :public_folder, File.dirname(__FILE__) + '/../public'
 
@@ -16,13 +16,17 @@ end
 
 post '/ocr' do
   @filepath = Time.now.to_i.to_s + ".jpg"
-  Magick::ImageList.new(params[:file][:tempfile].path).resize_to_fit(240,240).threshold(25000).write("./public/#{@filepath}")
+  Magick::ImageList.new(params[:file][:tempfile].path).threshold(28000).auto_orient.write("./public/#{@filepath}")
   e = Tesseract::Engine.new { |x|
     x.language = :eng
     x.blacklist = '|'
+    x.whitelist = '1234567890'
   }
+  @ocr = "false"
+  
+  number = e.text_for("public/#{@filepath}").strip.gsub(/\s/,'')
 
-  @ocr = e.text_for("public/#{@filepath}").strip
+  @ocr = number #$1 if /(\d{16})/ =~ number
   erb :index
 end
 
