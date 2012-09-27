@@ -13,5 +13,5 @@ $ bundle install
 ```
 
 ```shell
-bundle exec bin/ocr.rb
+$ bundle exec bin/ocr.rb
 ```
