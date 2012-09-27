@@ -1,0 +1,17 @@
+OCR Capture
+=========================================
+
+### Use System Module
+
+ * ImageMagick
+ * Tesseract
+
+### Install
+
+'''shell
+$ bundle install
+'''
+
+'''shell
+bundle exec bin/ocr.rb
+'''
