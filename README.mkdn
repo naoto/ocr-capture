@@ -8,10 +8,10 @@ OCR Capture
 
 ### Install
 
-'''shell
+```shell
 $ bundle install
-'''
+```
 
-'''shell
+```shell
 bundle exec bin/ocr.rb
-'''
+```
